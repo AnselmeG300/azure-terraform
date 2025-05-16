@@ -1,4 +1,4 @@
-data "azurerm_platform_image" "eazy-image" {
+data "azurerm_platform_image" "iform-image" {
   location  = var.location
   publisher = "Canonical"
   offer     = "0001-com-ubuntu-server-focal"

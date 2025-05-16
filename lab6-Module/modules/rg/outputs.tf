@@ -1,8 +1,8 @@
 output "rg_name" {
-  value = azurerm_resource_group.eazy-rg.name
+  value = azurerm_resource_group.iform-rg.name
   
 }
 output "rg_location" {
-  value = azurerm_resource_group.eazy-rg.location
+  value = azurerm_resource_group.iform-rg.location
   
 }

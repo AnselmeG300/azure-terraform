@@ -1,5 +1,5 @@
 # Image Ubuntu 20.04 LTS
-data "azurerm_platform_image" "eazy-image" {
+data "azurerm_platform_image" "iform-image" {
   location  = var.location
   publisher = "Canonical"
   offer     = "0001-com-ubuntu-server-focal"
@@ -8,8 +8,8 @@ data "azurerm_platform_image" "eazy-image" {
 
 
 # Create a Public IP for the VM
-resource "azurerm_public_ip" "eazy-ip" {
-  name                = "my-eazy-public-ip"
+resource "azurerm_public_ip" "iform-ip" {
+  name                = "my-iform-public-ip"
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Dynamic"
@@ -20,8 +20,8 @@ resource "azurerm_public_ip" "eazy-ip" {
 }
 
 # Create a Virtual Machine
-resource "azurerm_linux_virtual_machine" "eazy-vm" {
-  name                            = "my-eazy-vm"
+resource "azurerm_linux_virtual_machine" "iform-vm" {
+  name                            = "my-iform-vm"
   location                        = var.location
   resource_group_name             = var.resource_group_name
   network_interface_ids           = [var.network_interface_id]
@@ -32,14 +32,14 @@ resource "azurerm_linux_virtual_machine" "eazy-vm" {
   disable_password_authentication = false
 
   source_image_reference {
-    publisher = data.azurerm_platform_image.eazy-image.publisher
-    offer     = data.azurerm_platform_image.eazy-image.offer
-    sku       = data.azurerm_platform_image.eazy-image.sku
-    version   = data.azurerm_platform_image.eazy-image.version
+    publisher = data.azurerm_platform_image.iform-image.publisher
+    offer     = data.azurerm_platform_image.iform-image.offer
+    sku       = data.azurerm_platform_image.iform-image.sku
+    version   = data.azurerm_platform_image.iform-image.version
   }
 
   os_disk {
-    name                 = "my-eazy-os-disk"
+    name                 = "my-iform-os-disk"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }

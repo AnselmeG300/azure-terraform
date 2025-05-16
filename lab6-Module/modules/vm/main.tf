@@ -1,4 +1,4 @@
-data "azurerm_platform_image" "eazytraining-image" {
+data "azurerm_platform_image" "iform-image" {
   location  = "West Europe"
   publisher = "Canonical"
   offer     = "0001-com-ubuntu-server-focal"
@@ -8,7 +8,7 @@ data "azurerm_platform_image" "eazytraining-image" {
 
 resource "azurerm_virtual_machine_extension" "vm-extension" {
   name                 = "hostname"
-  virtual_machine_id   = azurerm_linux_virtual_machine.tfeazytraining-vm.id
+  virtual_machine_id   = azurerm_linux_virtual_machine.tfiform-vm.id
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
   type_handler_version = "2.1"
@@ -24,28 +24,28 @@ resource "azurerm_virtual_machine_extension" "vm-extension" {
   }
 }
 
-resource "azurerm_network_interface" "tfeazytraining-vnic" {
-  name                = "my-eazytraining-nic"
-  location            = azurerm_resource_group.tfeazytraining-gp.location
-  resource_group_name = azurerm_resource_group.tfeazytraining-gp.name
+resource "azurerm_network_interface" "tfiform-vnic" {
+  name                = "my-iform-nic"
+  location            = azurerm_resource_group.tfiform-gp.location
+  resource_group_name = azurerm_resource_group.tfiform-gp.name
 
   ip_configuration {
-    name                          = "my-eazytraining-nic-ip"
-    subnet_id                     = azurerm_subnet.tfeazytraining-subnet.id
+    name                          = "my-iform-nic-ip"
+    subnet_id                     = azurerm_subnet.tfiform-subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.tfeazytraining.id
+    public_ip_address_id          = azurerm_public_ip.tfiform.id
   }
 
   tags = {
-    environment = "my-eazytraining-env"
+    environment = "my-iform-env"
   }
 }
 
-resource "azurerm_linux_virtual_machine" "tfeazytraining-vm" {
-  name                            = "my-eazytraining-vm"
+resource "azurerm_linux_virtual_machine" "tfiform-vm" {
+  name                            = "my-iform-vm"
   location                        = var.rg-location
   resource_group_name             = var.rg-name
-  network_interface_ids           = [azurerm_network_interface.tfeazytraining-vnic.id]
+  network_interface_ids           = [azurerm_network_interface.tfiform-vnic.id]
   size                            = var.instance_template
   computer_name                   = "myvm"
   admin_username                  = "azureuser"
@@ -53,22 +53,22 @@ resource "azurerm_linux_virtual_machine" "tfeazytraining-vm" {
   disable_password_authentication = false
 
     source_image_reference {
-    publisher = data.azurerm_platform_image.eazytraining-image.publisher
-    offer     = data.azurerm_platform_image.eazytraining-image.offer
-    sku       = data.azurerm_platform_image.eazytraining-image.sku
-    version   = data.azurerm_platform_image.eazytraining-image.version
+    publisher = data.azurerm_platform_image.iform-image.publisher
+    offer     = data.azurerm_platform_image.iform-image.offer
+    sku       = data.azurerm_platform_image.iform-image.sku
+    version   = data.azurerm_platform_image.iform-image.version
   }
   
   os_disk {
-    name                 = "my-eazytraining-os-disk"
+    name                 = "my-iform-os-disk"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }
    provisioner "local-exec" {
-     command = "echo ${azurerm_linux_virtual_machine.tfeazytraining-vm.name}:  ${azurerm_public_ip.tfeazytraining-ip.ip_address} >> ip_address.txt"
+     command = "echo ${azurerm_linux_virtual_machine.tfiform-vm.name}:  ${azurerm_public_ip.tfiform-ip.ip_address} >> ip_address.txt"
 	}
 	
   tags = {
-    environment = "my-eazytraining-env"
+    environment = "my-iform-env"
   }
 }

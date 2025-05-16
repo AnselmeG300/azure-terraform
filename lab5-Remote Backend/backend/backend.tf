@@ -2,7 +2,10 @@ provider "azurerm" {
   features {
   }
   resource_provider_registrations = "none"
-  subscription_id                 = ""
+  subscription_id                 = "your-subscription-id"
+  client_id = "your-client-id"
+  client_secret = "your-client-secret"
+  tenant_id = "your-tenant-id"
 }
 
 # Création du Resource Group pour le backend
@@ -13,7 +16,7 @@ resource "azurerm_resource_group" "tf_backend" {
 
 # Création du Storage Account pour stocker l'état Terraform
 resource "azurerm_storage_account" "tf_state" {
-  name                     = "eazytrainingstorage23" # unique
+  name                     = "iformstorage23" # unique
   resource_group_name      = azurerm_resource_group.tf_backend.name
   location                 = azurerm_resource_group.tf_backend.location
   account_tier             = "Standard"

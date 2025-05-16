@@ -7,13 +7,9 @@ terraform {
     }
   }
 }
-provider "azurerm" {
-  features {
-  }
-  resource_provider_registrations = "none"
-}
 
-resource "azurerm_resource_group" "tfeazytraining-gp" {
-  name     = "my-eazytraining-rg"
+
+resource "azurerm_resource_group" "tfiform-gp" {
+  name     = "my-iform-rg"
   location = "West Europe"
 }

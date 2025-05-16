@@ -7,11 +7,11 @@ variable "location" {
 variable "resource_group_name" {
   type        = string
   description = "The name of the resource group"
-  default     = "my-eazy-rg"
+  default     = "my-iform-rg"
 }
 variable "environment" {
   type        = string
   description = "The environment for the resources"
-  default     = "eazy-env"
+  default     = "iform-env"
   
 }

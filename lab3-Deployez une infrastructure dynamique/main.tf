@@ -1,55 +1,55 @@
-resource "azurerm_resource_group" "eazy-rg" {
+resource "azurerm_resource_group" "iform-rg" {
   name     = var.resource_group_name
   location = var.location
 }
 
-resource "azurerm_network_watcher" "eazy-watcher" {
-  name                = "my-eazy-watcher"
-  location            = azurerm_resource_group.eazy-rg.location
-  resource_group_name = azurerm_resource_group.eazy-rg.name
+resource "azurerm_network_watcher" "iform-watcher" {
+  name                = "my-iform-watcher"
+  location            = azurerm_resource_group.iform-rg.location
+  resource_group_name = azurerm_resource_group.iform-rg.name
   tags = {
-    environment = "my-eazy-env"
+    environment = "my-iform-env"
   }
 }
 
 # Create a Virtual Network
-resource "azurerm_virtual_network" "eazy-vnet" {
-  name                = "my-eazy-vnet"
-  location            = azurerm_resource_group.eazy-rg.location
-  resource_group_name = azurerm_resource_group.eazy-rg.name
+resource "azurerm_virtual_network" "iform-vnet" {
+  name                = "my-iform-vnet"
+  location            = azurerm_resource_group.iform-rg.location
+  resource_group_name = azurerm_resource_group.iform-rg.name
   address_space       = ["10.0.0.0/16"]
 
   tags = {
-    environment = "my-eazy-env"
+    environment = "my-iform-env"
   }
 }
 
 # Create a Subnet in the Virtual Network
-resource "azurerm_subnet" "eazy-subnet" {
-  name                 = "my-eazy-subnet"
-  resource_group_name  = azurerm_resource_group.eazy-rg.name
-  virtual_network_name = azurerm_virtual_network.eazy-vnet.name
+resource "azurerm_subnet" "iform-subnet" {
+  name                 = "my-iform-subnet"
+  resource_group_name  = azurerm_resource_group.iform-rg.name
+  virtual_network_name = azurerm_virtual_network.iform-vnet.name
   address_prefixes     = ["10.0.2.0/24"]
 }
 
 # Create a Public IP
-resource "azurerm_public_ip" "eazy-ip" {
-  name                = "my-eazy-public-ip"
-  location            = azurerm_resource_group.eazy-rg.location
-  resource_group_name = azurerm_resource_group.eazy-rg.name
+resource "azurerm_public_ip" "iform-ip" {
+  name                = "my-iform-public-ip"
+  location            = azurerm_resource_group.iform-rg.location
+  resource_group_name = azurerm_resource_group.iform-rg.name
   allocation_method   = "Dynamic"
   sku                 = "Basic"
 
   tags = {
-    environment = "my-eazy-env"
+    environment = "my-iform-env"
   }
 }
 
 # Create a Network Security Group and rule
-resource "azurerm_network_security_group" "eazy-nsg" {
-  name                = "my-eazy-nsg"
-  location            = azurerm_resource_group.eazy-rg.location
-  resource_group_name = azurerm_resource_group.eazy-rg.name
+resource "azurerm_network_security_group" "iform-nsg" {
+  name                = "my-iform-nsg"
+  location            = azurerm_resource_group.iform-rg.location
+  resource_group_name = azurerm_resource_group.iform-rg.name
 
   security_rule {
     name                       = "HTTP"
@@ -78,40 +78,40 @@ resource "azurerm_network_security_group" "eazy-nsg" {
     prevent_destroy = false
   }
   tags = {
-    environment = "my-eazy-env"
+    environment = "my-iform-env"
   }
 }
 
 # Create a Network Interface
-resource "azurerm_network_interface" "eazy-vnic" {
-  name                = "my-eazy-nic"
-  location            = azurerm_resource_group.eazy-rg.location
-  resource_group_name = azurerm_resource_group.eazy-rg.name
+resource "azurerm_network_interface" "iform-vnic" {
+  name                = "my-iform-nic"
+  location            = azurerm_resource_group.iform-rg.location
+  resource_group_name = azurerm_resource_group.iform-rg.name
 
   ip_configuration {
-    name                          = "my-eazy-nic-ip"
-    subnet_id                     = azurerm_subnet.eazy-subnet.id
+    name                          = "my-iform-nic-ip"
+    subnet_id                     = azurerm_subnet.iform-subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.eazy-ip.id
+    public_ip_address_id          = azurerm_public_ip.iform-ip.id
   }
 
   tags = {
-    environment = "my-eazy-env"
+    environment = "my-iform-env"
   }
 }
 
 # Create a Network Interface Security Group association
-resource "azurerm_network_interface_security_group_association" "eazy-assoc" {
-  network_interface_id      = azurerm_network_interface.eazy-vnic.id
-  network_security_group_id = azurerm_network_security_group.eazy-nsg.id
+resource "azurerm_network_interface_security_group_association" "iform-assoc" {
+  network_interface_id      = azurerm_network_interface.iform-vnic.id
+  network_security_group_id = azurerm_network_security_group.iform-nsg.id
 }
 
 # Create a Virtual Machine
-resource "azurerm_linux_virtual_machine" "eazy-vm" {
-  name                            = "my-eazy-vm"
-  location                        = azurerm_resource_group.eazy-rg.location
-  resource_group_name             = azurerm_resource_group.eazy-rg.name
-  network_interface_ids           = [azurerm_network_interface.eazy-vnic.id]
+resource "azurerm_linux_virtual_machine" "iform-vm" {
+  name                            = "my-iform-vm"
+  location                        = azurerm_resource_group.iform-rg.location
+  resource_group_name             = azurerm_resource_group.iform-rg.name
+  network_interface_ids           = [azurerm_network_interface.iform-vnic.id]
   size                            = var.instance_template
   computer_name                   = "myvm"
   admin_username                  = "azureuser"
@@ -119,22 +119,22 @@ resource "azurerm_linux_virtual_machine" "eazy-vm" {
   disable_password_authentication = false
 
   source_image_reference {
-    publisher = data.azurerm_platform_image.eazy-image.publisher
-    offer     = data.azurerm_platform_image.eazy-image.offer
-    sku       = data.azurerm_platform_image.eazy-image.sku
-    version   = data.azurerm_platform_image.eazy-image.version
+    publisher = data.azurerm_platform_image.iform-image.publisher
+    offer     = data.azurerm_platform_image.iform-image.offer
+    sku       = data.azurerm_platform_image.iform-image.sku
+    version   = data.azurerm_platform_image.iform-image.version
   }
 
 
   os_disk {
-    name                 = "my-eazy-os-disk"
+    name                 = "my-iform-os-disk"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }
 
 
   tags = {
-    environment = "my-eazy-env"
+    environment = "my-iform-env"
   }
 }
 

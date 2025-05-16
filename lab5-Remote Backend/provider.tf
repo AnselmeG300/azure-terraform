@@ -10,7 +10,7 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "tf-backend-rg"
-    storage_account_name = "eazytrainingstorage23"
+    storage_account_name = "iformstorage23"
     container_name       = "tfstate"
     key                  = "backend.tfstate"
   }
@@ -19,5 +19,8 @@ provider "azurerm" {
   features {
   }
   resource_provider_registrations = "none"
-  subscription_id                 = ""
+  subscription_id                 = "your-subscription-id"
+  client_id = "your-client-id"
+  client_secret = "your-client-secret"
+  tenant_id = "your-tenant-id"
 }

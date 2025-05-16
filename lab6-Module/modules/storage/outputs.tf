@@ -1,4 +1,4 @@
 output "eazy_disk_id" {
-  value = azurerm_managed_disk.eazy-disk.id
+  value = azurerm_managed_disk.iform-disk.id
   description = "The ID of the managed disk"
 }

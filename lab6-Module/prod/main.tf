@@ -1,5 +1,5 @@
-resource "azurerm_network_watcher" "eazy-watcher" {
-  name                = "my-eazy-watcher"
+resource "azurerm_network_watcher" "iform-watcher" {
+  name                = "my-iform-watcher"
   location            = var.location
   resource_group_name = var.resource_group_name
   tags = {
