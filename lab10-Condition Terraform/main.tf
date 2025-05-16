@@ -24,10 +24,10 @@ provider "azurerm" {
   features {
   }
   resource_provider_registrations = "none"
-  subscription_id                 = "your-subscription-id"
-  client_id = "your-client-id"
-  client_secret = "your-client-secret"
-  tenant_id = "your-tenant-id"
+  subscription_id                 = ""
+  client_id = ""
+  client_secret = ""
+  tenant_id = ""
 }
 resource "azurerm_resource_group" "rg" {
   name     = "iform-rg"

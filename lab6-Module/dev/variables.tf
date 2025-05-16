@@ -8,7 +8,7 @@ variable "location" {
 variable "nsg_name" {
   type        = string
   description = "The name of the network security group"
-  default     = "my-iform-nsg-${locals.name}"
+  default     = "my-iform-nsg-${local.name}"
 
 }
 variable "instance_template" {

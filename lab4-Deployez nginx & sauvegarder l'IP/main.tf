@@ -1,10 +1,10 @@
 resource "azurerm_resource_group" "iform-rg" {
-  name     = "my-iform-rg-${locals.name}"
+  name     = "my-iform-rg-${local.name}"
   location = var.location
 }
 
 resource "azurerm_network_watcher" "iform-watcher" {
-  name                = "my-iform-watcher-${locals.name}"
+  name                = "my-iform-watcher-${local.name}"
   location            = azurerm_resource_group.iform-rg.location
   resource_group_name = azurerm_resource_group.iform-rg.name
   tags = {
@@ -15,7 +15,7 @@ resource "azurerm_network_watcher" "iform-watcher" {
 
 # Create a Virtual Network
 resource "azurerm_virtual_network" "iform-vnet" {
-  name                = "my-iform-vnet-${locals.name}"
+  name                = "my-iform-vnet-${local.name}"
   location            = azurerm_resource_group.iform-rg.location
   resource_group_name = azurerm_resource_group.iform-rg.name
   address_space       = local.address_space
@@ -27,15 +27,15 @@ resource "azurerm_virtual_network" "iform-vnet" {
 
 # Create a Subnet in the Virtual Network
 resource "azurerm_subnet" "iform-subnet" {
-  name                 = "my-iform-subnet-${locals.name}"
+  name                 = "my-iform-subnet-${local.name}"
   resource_group_name  = azurerm_resource_group.iform-rg.name
   virtual_network_name = azurerm_virtual_network.iform-vnet.name
-  address_prefixes     = locals.address_prefixes
+  address_prefixes     = local.address_prefixes
 }
 
 # Create a Public IP
 resource "azurerm_public_ip" "iform-ip" {
-  name                = "my-iform-public-ip-${locals.name}"
+  name                = "my-iform-public-ip-${local.name}"
   location            = azurerm_resource_group.iform-rg.location
   resource_group_name = azurerm_resource_group.iform-rg.name
   allocation_method   = "Dynamic"
@@ -48,7 +48,7 @@ resource "azurerm_public_ip" "iform-ip" {
 
 # Create a Network Security Group and rule
 resource "azurerm_network_security_group" "iform-nsg" {
-  name                = "my-iform-nsg-${locals.name}"
+  name                = "my-iform-nsg-${local.name}"
   location            = azurerm_resource_group.iform-rg.location
   resource_group_name = azurerm_resource_group.iform-rg.name
 
@@ -85,12 +85,12 @@ resource "azurerm_network_security_group" "iform-nsg" {
 
 # Create a Network Interface
 resource "azurerm_network_interface" "iform-vnic" {
-  name                = "my-iform-nic-${locals.name}"
+  name                = "my-iform-nic-${local.name}"
   location            = azurerm_resource_group.iform-rg.location
   resource_group_name = azurerm_resource_group.iform-rg.name
 
   ip_configuration {
-    name                          = "my-iform-nic-ip-${locals.name}"
+    name                          = "my-iform-nic-ip-${local.name}"
     subnet_id                     = azurerm_subnet.iform-subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.iform-ip.id
@@ -109,7 +109,7 @@ resource "azurerm_network_interface_security_group_association" "iform-assoc" {
 
 # Create a Virtual Machine
 resource "azurerm_linux_virtual_machine" "iform-vm" {
-  name                            = "my-iform-vm-${locals.name}"
+  name                            = "my-iform-vm-${local.name}"
   location                        = azurerm_resource_group.iform-rg.location
   resource_group_name             = azurerm_resource_group.iform-rg.name
   network_interface_ids           = [azurerm_network_interface.iform-vnic.id]
@@ -128,7 +128,7 @@ resource "azurerm_linux_virtual_machine" "iform-vm" {
 
 
   os_disk {
-    name                 = "my-iform-os-disk-${locals.name}"
+    name                 = "my-iform-os-disk-${local.name}"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }

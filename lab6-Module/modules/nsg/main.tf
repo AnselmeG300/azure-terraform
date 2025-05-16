@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "nsg" {
   name                = var.nsg_name
   location            = var.location 
-  resource_group_name = "my-iform-rg-${locals.name}"
+  resource_group_name = "my-iform-rg-${local.name}"
 
   security_rule {
     name                       = "HTTP"
