@@ -4,6 +4,6 @@ Telecharger le fichier zip de terraform
 Installez les plugins sur votre IDE 
 - Hashicorp Terraform 
 
-
+Chaque apprenant devra utiliser les sous reseaux distincs
 
 

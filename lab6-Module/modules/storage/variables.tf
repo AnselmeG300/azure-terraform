@@ -7,7 +7,7 @@ variable "location" {
 variable "resource_group_name" {
   type        = string
   description = "The name of the resource group"
-  default     = "my-iform-rg"
+  default     = "my-iform-rg-${locals.name}"
 }
 
 variable "environment" {

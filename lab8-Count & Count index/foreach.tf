@@ -25,7 +25,7 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "vnet-tp2"
-  address_space       = ["10.0.0.0/16"]
+  address_space       = local.address_space
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 }
@@ -62,7 +62,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_username        = "azureuser"
 
   disable_password_authentication = false
-  admin_password                  = "Ulrich@2024!"  # à changer si besoin
+  admin_password                  = "Anselme@2024!"  # à changer si besoin
 
   os_disk {
     caching              = "ReadWrite"

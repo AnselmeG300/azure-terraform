@@ -1,5 +1,5 @@
 resource "azurerm_network_watcher" "iform-watcher" {
-  name                = "my-iform-watcher"
+  name                = "my-iform-watcher-${locals.name}"
   location            = var.location
   resource_group_name = var.resource_group_name
   tags = {

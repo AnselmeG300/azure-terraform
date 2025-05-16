@@ -15,10 +15,10 @@ resource "azurerm_resource_group" "iform-rg" {
 # Create a Virtual Network
 resource "azurerm_virtual_network" "iform-vnet" {
   for_each            = local.regions
-  name                = "my-iform-vnet${each.key}"
+  name                = "my-iform-vnet-${locals.name}${each.key}"
   location            = azurerm_resource_group.iform-rg[each.key].location
   resource_group_name = azurerm_resource_group.iform-rg[each.key].name
-  address_space       = ["10.0.0.0/16"]
+  address_space       = local.address_space
 
   tags = {
     environment = "my-iform-env"
@@ -28,17 +28,17 @@ resource "azurerm_virtual_network" "iform-vnet" {
 # Create a Subnet in the Virtual Network
 resource "azurerm_subnet" "iform-subnet" {
   for_each            = local.regions
-  name                 = "my-iform-subnet"
+  name                 = "my-iform-subnet-${locals.name}"
   resource_group_name  = azurerm_resource_group.iform-rg[each.key].name
   virtual_network_name = azurerm_virtual_network.iform-vnet[each.key].name
-  address_prefixes     = ["10.0.2.0/24"]
+  address_prefixes     = locals.address_prefixes
 }
 
 
 # Create a Network Security Group and rule
 resource "azurerm_network_security_group" "iform-nsg" {
   for_each = local.regions
-  name                = "my-iform-nsg-${each.key}"
+  name                = "my-iform-nsg-${locals.name}-${each.key}"
   location            = azurerm_resource_group.iform-rg[each.key].location
   resource_group_name = azurerm_resource_group.iform-rg[each.key].name
 
@@ -49,7 +49,7 @@ resource "azurerm_network_security_group" "iform-nsg" {
 
 resource "azurerm_public_ip" "eazy" {
   for_each = local.regions
-  name                = "my-iform-public-ip-${each.key}"
+  name                = "my-iform-public-ip-${locals.name}-${each.key}"
   location            = azurerm_resource_group.iform-rg[each.key].location
   resource_group_name = azurerm_resource_group.iform-rg[each.key].name
   allocation_method   = "Static"
@@ -63,12 +63,12 @@ resource "azurerm_public_ip" "eazy" {
 # Create a Network Interface
 resource "azurerm_network_interface" "iform-vnic" {
   for_each = local.regions
-  name                = "my-iform-nic"
+  name                = "my-iform-nic-${locals.name}"
   location            = azurerm_resource_group.iform-rg[each.key].location
   resource_group_name = azurerm_resource_group.iform-rg[each.key].name
 
   ip_configuration {
-    name                          = "my-iform-nic-ip"
+    name                          = "my-iform-nic-ip-${locals.name}"
     subnet_id                     = azurerm_subnet.iform-subnet[each.key].id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.eazy[each.key].id
@@ -89,7 +89,7 @@ resource "azurerm_network_interface_security_group_association" "iform-assoc" {
 # Create a Virtual Machine
 resource "azurerm_linux_virtual_machine" "iform-vm" {
   for_each = local.regions
-  name                            = "my-iform-vm"
+  name                            = "my-iform-vm-${locals.name}"
   location                        = azurerm_resource_group.iform-rg[each.key].location
   resource_group_name             = azurerm_resource_group.iform-rg[each.key].name
   network_interface_ids           = [azurerm_network_interface.iform-vnic[each.key].id]
@@ -108,7 +108,7 @@ resource "azurerm_linux_virtual_machine" "iform-vm" {
 
   
   os_disk {
-    name                 = "my-iform-os-disk"
+    name                 = "my-iform-os-disk-${locals.name}"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }

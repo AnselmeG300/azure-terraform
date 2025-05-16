@@ -25,12 +25,12 @@ resource "azurerm_virtual_machine_extension" "vm-extension" {
 }
 
 resource "azurerm_network_interface" "tfiform-vnic" {
-  name                = "my-iform-nic"
+  name                = "my-iform-nic-${locals.name}"
   location            = azurerm_resource_group.tfiform-gp.location
   resource_group_name = azurerm_resource_group.tfiform-gp.name
 
   ip_configuration {
-    name                          = "my-iform-nic-ip"
+    name                          = "my-iform-nic-ip-${locals.name}"
     subnet_id                     = azurerm_subnet.tfiform-subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.tfiform.id
@@ -42,7 +42,7 @@ resource "azurerm_network_interface" "tfiform-vnic" {
 }
 
 resource "azurerm_linux_virtual_machine" "tfiform-vm" {
-  name                            = "my-iform-vm"
+  name                            = "my-iform-vm-${locals.name}"
   location                        = var.rg-location
   resource_group_name             = var.rg-name
   network_interface_ids           = [azurerm_network_interface.tfiform-vnic.id]
@@ -60,7 +60,7 @@ resource "azurerm_linux_virtual_machine" "tfiform-vm" {
   }
   
   os_disk {
-    name                 = "my-iform-os-disk"
+    name                 = "my-iform-os-disk-${locals.name}"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }

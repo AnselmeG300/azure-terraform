@@ -10,6 +10,6 @@ terraform {
 
 
 resource "azurerm_resource_group" "tfiform-gp" {
-  name     = "my-iform-rg"
+  name     = "my-iform-rg-${locals.name}"
   location = "West Europe"
 }

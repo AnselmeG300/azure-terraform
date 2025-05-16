@@ -9,7 +9,7 @@ data "azurerm_platform_image" "iform-image" {
 
 # Create a Public IP for the VM
 resource "azurerm_public_ip" "iform-ip" {
-  name                = "my-iform-public-ip"
+  name                = "my-iform-public-ip-${locals.name}"
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Dynamic"
@@ -21,7 +21,7 @@ resource "azurerm_public_ip" "iform-ip" {
 
 # Create a Virtual Machine
 resource "azurerm_linux_virtual_machine" "iform-vm" {
-  name                            = "my-iform-vm"
+  name                            = "my-iform-vm-${locals.name}"
   location                        = var.location
   resource_group_name             = var.resource_group_name
   network_interface_ids           = [var.network_interface_id]
@@ -39,7 +39,7 @@ resource "azurerm_linux_virtual_machine" "iform-vm" {
   }
 
   os_disk {
-    name                 = "my-iform-os-disk"
+    name                 = "my-iform-os-disk-${locals.name}"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }
