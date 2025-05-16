@@ -16,9 +16,9 @@ resource "null_resource" "write_info" {
 
   provisioner "local-exec" {
     command = <<EOT
-      echo IP: ${azurerm_public_ip.iform-ip.ip_address} > infos_ec2.txt
-      echo ID: ${azurerm_linux_virtual_machine.iform-vm.id} >> infos_ec2.txt
-      echo Zone de disponibilité: ${azurerm_linux_virtual_machine.iform-vm.zone} >> infos_ec2.txt
+      echo IP: ${output.public_ip} > infos_vm.txt
+      echo ID: ${output.vm_id} >> infos_vm.txt
+      echo Zone de disponibilité: ${azurerm_linux_virtual_machine.iform-vm.zone} >> infos_vm.txt
     EOT
   }
 }

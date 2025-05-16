@@ -2,7 +2,7 @@
 resource "azurerm_virtual_network" "iform-vnet" {
   name                = "my-iform-vnet-${locals.name}"
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = "my-iform-rg-${locals.name}"
   address_space       = local.address_space
 
  tags = {
@@ -13,7 +13,7 @@ resource "azurerm_virtual_network" "iform-vnet" {
 # Create a Subnet in the Virtual Network
 resource "azurerm_subnet" "iform-subnet" {
   name                 = "my-iform-subnet-${locals.name}"
-  resource_group_name  = var.resource_group_name
+  resource_group_name  = "my-iform-rg-${locals.name}"
   virtual_network_name = azurerm_virtual_network.iform-vnet.name
   address_prefixes     = locals.address_prefixes
   
@@ -23,7 +23,7 @@ resource "azurerm_subnet" "iform-subnet" {
 resource "azurerm_network_interface" "iform-vnic" {
   name                = "my-iform-nic-${locals.name}"
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = "my-iform-rg-${locals.name}"
 
   ip_configuration {
     name                          = "my-iform-nic-ip-${locals.name}"

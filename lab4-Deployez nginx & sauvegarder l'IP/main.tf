@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "iform-rg" {
-  name     = var.resource_group_name
+  name     = "my-iform-rg-${locals.name}"
   location = var.location
 }
 

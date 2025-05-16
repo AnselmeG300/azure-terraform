@@ -4,11 +4,7 @@ variable "location" {
   default     = "West Europe"
 }
 
-variable "resource_group_name" {
-  type        = string
-  description = "The name of the resource group"
-  default     = "my-iform-rg-${locals.name}"
-}
+
 variable "public_ip_id" {
   type        = string
   description = "The ID of the public IP to associate with the instance"

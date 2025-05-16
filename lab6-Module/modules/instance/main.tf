@@ -11,7 +11,7 @@ data "azurerm_platform_image" "iform-image" {
 resource "azurerm_public_ip" "iform-ip" {
   name                = "my-iform-public-ip-${locals.name}"
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = "my-iform-rg-${locals.name}"
   allocation_method   = "Dynamic"
   sku                 = "Basic"
   tags = {
@@ -23,7 +23,7 @@ resource "azurerm_public_ip" "iform-ip" {
 resource "azurerm_linux_virtual_machine" "iform-vm" {
   name                            = "my-iform-vm-${locals.name}"
   location                        = var.location
-  resource_group_name             = var.resource_group_name
+  resource_group_name             = "my-iform-rg-${locals.name}"
   network_interface_ids           = [var.network_interface_id]
   size                            = var.instance_template
   computer_name                   = "myvm"

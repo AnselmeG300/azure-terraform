@@ -1,7 +1,7 @@
 resource "azurerm_network_watcher" "iform-watcher" {
   name                = "my-iform-watcher-${locals.name}"
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = "my-iform-rg-${locals.name}"
   tags = {
     environment = var.environment
   }
@@ -10,7 +10,7 @@ resource "azurerm_network_watcher" "iform-watcher" {
 module "rg" {
   source              = "../modules/rg"
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = "my-iform-rg-${locals.name}"
   environment         = var.environment
 }
 module "ip" {
