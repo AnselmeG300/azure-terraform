@@ -3,14 +3,7 @@ resource "azurerm_resource_group" "iform-rg" {
   location = var.location
 }
 
-resource "azurerm_network_watcher" "iform-watcher" {
-  name                = "my-iform-watcher-${local.name}"
-  location            = azurerm_resource_group.iform-rg.location
-  resource_group_name = azurerm_resource_group.iform-rg.name
-  tags = {
-    environment = "my-iform-env"
-  }
-}
+
 
 resource "azurerm_virtual_network" "iform-vnet" {
   name                = "my-iform-vnet-${local.name}"

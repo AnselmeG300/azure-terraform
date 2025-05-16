@@ -119,11 +119,4 @@ resource "azurerm_linux_virtual_machine" "iform-vm" {
   }
 }
 
-resource "azurerm_network_watcher" "example" {
-  name                = "my-iform-watcher-${local.name}"
-  location            = azurerm_resource_group.iform-rg.location
-  resource_group_name = azurerm_resource_group.iform-rg.name
-  tags = {
-    environment = "my-iform-env" 
-  }
-}
+

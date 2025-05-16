@@ -1,11 +1,4 @@
-resource "azurerm_network_watcher" "iform-watcher" {
-  name                = "my-iform-watcher-${local.name}"
-  location            = var.location
-  resource_group_name = "my-iform-rg-${local.name}"
-  tags = {
-    environment = var.environment
-  }
-}
+
 #update des modules pour le dev et le prod
 module "rg" {
   source              = "../modules/rg"
