@@ -23,3 +23,22 @@ variable "environment" {
   default     = "iform-env"
   
 }
+
+variable "resource_group_name" {
+  type        = string
+  description = "The name of the resource group"
+  default     = "my-iform-rg"
+}
+
+variable "address_space" {
+  type        = list(string)
+}
+
+variable "address_prefixes" {
+  type        = list(string)
+}
+
+variable "local_name" {
+  type        = string
+  
+}

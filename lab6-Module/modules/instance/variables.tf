@@ -32,3 +32,8 @@ variable "environment" {
   default     = "iform-env"
   
 }
+
+variable "local_name" {
+  type        = string
+  
+}

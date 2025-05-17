@@ -1,9 +1,9 @@
 # Create a Virtual Network
 resource "azurerm_virtual_network" "iform-vnet" {
-  name                = "my-iform-vnet-${local.name}"
+  name                = "my-iform-vnet-${var.local_name}"
   location            = var.location
-  resource_group_name = "my-iform-rg-${local.name}"
-  address_space       = local.address_space
+  resource_group_name = var.resource_group_name
+  address_space       = var.address_space
 
  tags = {
     environment = var.environment
@@ -12,21 +12,21 @@ resource "azurerm_virtual_network" "iform-vnet" {
 
 # Create a Subnet in the Virtual Network
 resource "azurerm_subnet" "iform-subnet" {
-  name                 = "my-iform-subnet-${local.name}"
-  resource_group_name  = "my-iform-rg-${local.name}"
+  name                 = "my-iform-subnet-${var.local_name}"
+  resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.iform-vnet.name
-  address_prefixes     = local.address_prefixes
+  address_prefixes     = var.address_prefixes
   
 }
 
 # Create a Network Interface
 resource "azurerm_network_interface" "iform-vnic" {
-  name                = "my-iform-nic-${local.name}"
+  name                = "my-iform-nic-${var.local_name}"
   location            = var.location
-  resource_group_name = "my-iform-rg-${local.name}"
+  resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                          = "my-iform-nic-ip-${local.name}"
+    name                          = "my-iform-nic-ip-${var.local_name}"
     subnet_id                     = azurerm_subnet.iform-subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = var.public_ip_id

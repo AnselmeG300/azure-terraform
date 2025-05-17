@@ -11,7 +11,7 @@ module "ip" {
   location            = module.rg.rg_location
   resource_group_name = module.rg.rg_name
   environment         = var.environment
-
+  local_name = local.name
 }
 
 module "nsg" {
@@ -28,6 +28,9 @@ module "network" {
   public_ip_id        = module.ip.public_ip_id
   nsg_id              = module.nsg.nsg_id
   environment         = var.environment
+  address_space       = local.address_space
+  address_prefixes    = local.address_prefixes
+  local_name = local.name
 }
 
 
@@ -39,8 +42,9 @@ module "instance" {
   instance_template    = var.instance_template
   iform_disk_id         = module.storage.iform_disk_id
   environment          = var.environment
-
+  local_name = local.name
 }
+
 module "storage" {
   source              = "../modules/storage"
   location            = module.rg.rg_location
