@@ -5,12 +5,6 @@ variable "location" {
 }
 
 
-variable "nsg_name" {
-  type        = string
-  description = "The name of the network security group"
-  default     = "my-iform-nsg-${local.name}"
-
-}
 variable "instance_template" {
   type        = string
   description = "Template for the webserver"

@@ -15,17 +15,6 @@ variable "location" {
   default     = "West Europe"
 }
 
-variable "resource_group_name" {
-  type        = string
-  description = "The name of the resource group"
-  default     = "my-iform-rg-${local.name}"
-}
-variable "nsg_name" {
-  type        = string
-  description = "The name of the network security group"
-  default     = "my-iform-nsg-${local.name}"
-  
-}
 variable "environment" {
   type        = string
   description = "The environment for the resources"

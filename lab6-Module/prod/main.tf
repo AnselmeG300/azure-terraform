@@ -18,7 +18,7 @@ module "nsg" {
   source              = "../modules/nsg"
   location            = module.rg.rg_location
   resource_group_name = module.rg.rg_name
-  nsg_name            = var.nsg_name
+  nsg_name            = "my-iform-nsg-${local.name}"
   environment         = var.environment
 }
 module "network" {
