@@ -20,7 +20,7 @@ variable "network_interface_id" {
   default     = ""
 }
 
-variable "eazy_disk_id" {
+variable "iform_disk_id" {
   type        = string
   description = "The ID of the disk to attach to the instance"
   default     = ""

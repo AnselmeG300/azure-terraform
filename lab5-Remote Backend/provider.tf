@@ -10,13 +10,13 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "tf-backend-rg-anselme"
-    storage_account_name = "iformstorageanselme"
+    storage_account_name = "iformstorage23anselme"
     container_name       = "tfstate"
     key                  = "backend.tfstate"
-    subscription_id                 = ""
-    client_id = ""
-    client_secret = ""
-    tenant_id = ""
+    subscription_id                 = "your-subscription-id"
+  client_id = "your-client-id"
+  client_secret = "your-client-secret"
+  tenant_id = "your-tenant-id"
   }
 }
 
@@ -24,8 +24,8 @@ provider "azurerm" {
   features {
   }
   resource_provider_registrations = "none"
-  subscription_id                 = ""
-  client_id = ""
-  client_secret = ""
-  tenant_id = ""
+  subscription_id                 = "your-subscription-id"
+  client_id = "your-client-id"
+  client_secret = "your-client-secret"
+  tenant_id = "your-tenant-id"
 }

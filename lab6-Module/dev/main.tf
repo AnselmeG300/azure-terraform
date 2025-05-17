@@ -37,7 +37,7 @@ module "instance" {
   resource_group_name  = module.rg.rg_name
   network_interface_id = module.network.network_interface_id
   instance_template    = var.instance_template
-  eazy_disk_id         = module.storage.eazy_disk_id
+  iform_disk_id         = module.storage.iform_disk_id
   environment          = var.environment
 
 }
@@ -45,7 +45,7 @@ module "storage" {
   source              = "../modules/storage"
   location            = module.rg.rg_location
   resource_group_name = module.rg.rg_name
-  eazy_vm_id          = module.instance.intance_id
+  iform_vm_id          = module.instance.intance_id
   environment         = var.environment
 }
 

@@ -12,12 +12,12 @@ output "vm_id" {
 # }
 
 resource "null_resource" "write_info" {
-  depends_on = [azurerm_linux_virtual_machine.iform-vm]
+  depends_on = [azurerm_linux_virtual_machine.iform-vm, azurerm_public_ip.iform-ip]
 
   provisioner "local-exec" {
     command = <<EOT
-      echo IP: ${output.public_ip} > infos_vm.txt
-      echo ID: ${output.vm_id} >> infos_vm.txt
+      echo IP: ${azurerm_public_ip.iform-ip.ip_address} > infos_vm.txt
+      echo ID: ${azurerm_linux_virtual_machine.iform-vm.id} >> infos_vm.txt
       echo Zone de disponibilité: ${azurerm_linux_virtual_machine.iform-vm.zone} >> infos_vm.txt
     EOT
   }

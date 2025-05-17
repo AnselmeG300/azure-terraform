@@ -11,7 +11,7 @@ variable "environment" {
   default     = "iform-env"
   
 }
-variable "eazy_vm_id" {
+variable "iform_vm_id" {
   type        = string
   description = "The ID of the VM to attach the disk to"
   default     = ""

@@ -47,7 +47,7 @@ resource "azurerm_network_security_group" "iform-nsg" {
   }
 }
 
-resource "azurerm_public_ip" "eazy" {
+resource "azurerm_public_ip" "iform" {
   for_each = local.regions
   name                = "my-iform-public-ip-${local.name}-${each.key}"
   location            = azurerm_resource_group.iform-rg[each.key].location
@@ -71,7 +71,7 @@ resource "azurerm_network_interface" "iform-vnic" {
     name                          = "my-iform-nic-ip-${local.name}"
     subnet_id                     = azurerm_subnet.iform-subnet[each.key].id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.eazy[each.key].id
+    public_ip_address_id          = azurerm_public_ip.iform[each.key].id
   }
 
   tags = {

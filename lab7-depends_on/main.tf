@@ -41,7 +41,7 @@ resource "azurerm_network_security_group" "iform-nsg" {
 }
 
 # Create a Public IP for the Network Interface
-resource "azurerm_public_ip" "eazy" {
+resource "azurerm_public_ip" "iform" {
   name                = "my-iform-public-ip-${local.name}"
   location            = azurerm_resource_group.iform-rg.location
   resource_group_name = azurerm_resource_group.iform-rg.name
@@ -61,14 +61,14 @@ resource "azurerm_network_interface" "iform-vnic" {
     name                          = "my-iform-nic-ip-${local.name}"
     subnet_id                     = azurerm_subnet.iform-subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.eazy.id
+    public_ip_address_id          = azurerm_public_ip.iform.id
   }
 
   tags = {
     environment = "my-iform-env"
   }
 
-  depends_on = [azurerm_subnet.iform-subnet, azurerm_public_ip.eazy] # Assure que l'interface réseau dépend du sous-réseau et de l'IP publique
+  depends_on = [azurerm_subnet.iform-subnet, azurerm_public_ip.iform] # Assure que l'interface réseau dépend du sous-réseau et de l'IP publique
 }
 
 # Create a Network Interface Security Group association

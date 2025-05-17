@@ -13,7 +13,7 @@ resource "azurerm_managed_disk" "iform-disk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "iform-attach" {
   managed_disk_id    = azurerm_managed_disk.iform-disk.id
-  virtual_machine_id = var.eazy_vm_id
+  virtual_machine_id = var.iform_vm_id
   lun                = "10"
   caching            = "ReadWrite"
 }

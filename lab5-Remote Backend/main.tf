@@ -124,7 +124,7 @@ resource "azurerm_linux_virtual_machine" "iform-vm" {
 }
 
 resource "azurerm_storage_account" "iform-sa" {
-  name                     = "eazystorage23"
+  name                     = "iformstorage${local.name}"
   resource_group_name      = azurerm_resource_group.iform-rg.name
   location                 = azurerm_resource_group.iform-rg.location
   account_tier             = "Standard"
