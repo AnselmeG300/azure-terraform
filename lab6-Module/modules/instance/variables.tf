@@ -9,7 +9,11 @@ variable "location" {
   default     = "West Europe"
 }
 
-
+variable "resource_group_name" {
+  type        = string
+  description = "The name of the resource group"
+  default     = "my-iform-rg"
+}
 variable "network_interface_id" {
   type        = string
   description = "The ID of the network interface to associate with the instance"
