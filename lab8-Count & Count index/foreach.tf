@@ -1,40 +1,21 @@
-# This file is used to configure the provider and backend for the Terraform project.
-# It specifies the required version of Terraform and the azurerm provider.
-terraform {
-  required_version = ">=1.11.4"
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=4.26.0"
-    }
-  }
-}
-provider "azurerm" {
-  features {
-  }
-  resource_provider_registrations = "none"
-  subscription_id                 = "your-subscription-id"
-  client_id = "your-client-id"
-  client_secret = "your-client-secret"
-  tenant_id = "your-tenant-id"
-}
+
 resource "azurerm_resource_group" "rg" {
-  name     = "iform-rg"
+  name     = "iform-rg-${local.name}"
   location = "West Europe"
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-tp2"
+  name                = "vnet-tp2-${local.name}"
   address_space       = local.address_space
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = "subnet-tp2"
+  name                 = "subnet-tp2-${local.name}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes     = local.address_prefixes
 }
 
 resource "azurerm_network_interface" "nic" {

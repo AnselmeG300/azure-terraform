@@ -19,27 +19,27 @@ provider "azurerm" {
   tenant_id = "your-tenant-id"
 }
 resource "azurerm_resource_group" "rg" {
-  name     = "iform-rg"
+  name     = "iform-rg-${local.name}"
   location = "West Europe"
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-tp2"
+  name                = "vnet-tp2-${local.name}"
   address_space       = local.address_space
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = "subnet-tp2"
+  name                 = "subnet-tp2-${local.name}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes     = local.address_prefixes
 }
 
 # Liste des noms de VM
 locals {
-  vm_names = ["vm1", "vm2", "vm3"]
+  vm_names = ["vm1-${local.name}", "vm2-${local.name}", "vm3-${local.name}"]
 }
 
 resource "azurerm_network_interface" "nic" {
